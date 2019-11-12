@@ -24,4 +24,8 @@ Os resultados estão na tabela em arquivo Excel localizado neste repositório.
 
 Clusters             |  Dendograma
 :-------------------------:|:-------------------------:
-![Clusters ](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/Agnes%20Ward%20Cluster.png)  |  ![Dendograma](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/Agnes%20Ward%20Dendograma.png)
+![Clusters](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/Agnes%20Ward%20Cluster.png)  |  ![Dendograma](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/Agnes%20Ward%20Dendograma.png)
+
+Withinss|Betweenss         |  Silhouette Width
+:-------------------------:|:-------------------------:
+![Withinss|Betweenss](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/Agnes%20Ward%20Elbow.png)  |  ![Silhouette Width](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/Agnes%20Ward%20Silhouette.png)
