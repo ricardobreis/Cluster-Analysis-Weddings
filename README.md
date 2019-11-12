@@ -49,3 +49,16 @@ Clusters             |  Dendograma
 ### Silhouette Width
 
 ![Silhouette Width](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/Agnes%20Average%20Silhouette.png)
+
+## K-Means
+
+### Clusters
+![Clusters](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/K-means%20Cluster.png)
+
+### Withinss|Betweenss           
+
+![Withinss|Betweenss](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/Elbow.png)
+
+### Silhouette Width
+
+![Silhouette Width](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/Silhouette.png)
