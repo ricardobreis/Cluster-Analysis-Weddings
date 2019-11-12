@@ -19,3 +19,9 @@ Os resultados estão na tabela em arquivo Excel localizado neste repositório.
 ## Checando Correlações
 
 ![Correlações](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/Correlac%CC%A7a%CC%83o.png)
+
+## AGNES - Método WARD
+
+Clusters             |  Dendograma
+:-------------------------:|:-------------------------:
+![Clusters ](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/Agnes%20Ward%20Cluster.png)  |  ![Dendograma](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/Agnes%20Ward%20Dendograma.png)
