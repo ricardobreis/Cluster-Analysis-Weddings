@@ -16,7 +16,7 @@ a 5 (concordo totalmente) às seguintes afirmações:
 
 Os resultados estão na tabela em arquivo Excel localizado neste repositório.
 
-## PPré-processamento dos Dados
+## Pré-processamento dos Dados
 
 ### Checando Tipos de Dados
 
@@ -58,20 +58,20 @@ Clusters             |  Dendograma
 
 ## AGNES - Método AVERAGE
 
-Seguindo o Elbow Method, podemos observar nos gráficos beetweens e whithinss abaixo que o cotovelo se encontra no k = 3. Já observando o dendograma, é possível fazer um corte nas pernas mais longas gerando 4 clusters. O Silhouette Width aponta para um resultado ótimo em k = 3, por isso optamos por manter o k = 3 como melhor resultado seguindo a análise do elbow e silhouette width.
+Seguindo o Elbow Method, podemos observar nos gráficos beetweens e whithinss abaixo que o cotovelo se encontra no k = 3. Já observando o dendograma, é possível fazer um corte nas pernas mais longas gerando 3 clusters. O Silhouette Width aponta para um resultado ótimo em k = 3, por isso optou-se por manter o k = 3 como melhor resultado seguindo a análise do elbow e silhouette width.
 
 Clusters             |  Dendograma
 :-------------------------:|:-------------------------:
-![Clusters](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/Agnes%20Average%20Cluster.png)  |  ![Dendograma](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/Agnes%20Average%20Dendograma.png)
+![Clusters](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/img/Agnes%20average%20clusters.png)  |  ![Dendograma](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/img/Agnes%20average%20dendograma.png)
 
 
-### Withinss|Betweenss           
+### Elbow Method            
 
-![Withinss|Betweenss](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/Agnes%20Average%20Elbow.png)
+![Elbow Method ](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/img/Agnes%20average%20elbow.png)
 
 ### Silhouette Width
 
-![Silhouette Width](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/Agnes%20Average%20Silhouette.png)
+![Silhouette Width](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/img/Agnes%20average%20silhouette.png)
 
 ## K-Means
 
