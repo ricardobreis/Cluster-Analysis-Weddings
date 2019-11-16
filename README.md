@@ -67,7 +67,7 @@ Clusters             |  Dendograma
 
 ### Elbow Method            
 
-![Elbow Method ](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/img/Agnes%20average%20elbow.png)
+![Elbow Method](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/img/Agnes%20average%20elbow.png)
 
 ### Silhouette Width
 
@@ -75,15 +75,15 @@ Clusters             |  Dendograma
 
 ## K-Means
 
-Utilizando o K-means é possível observar pelo plot dos clusters que ele consegue separar melhor os grupos. Analisando os gráficos whithinss e betweenss fica claro que para o k = 3 existe uma quebra na suavidade da curva, sendo assim esse o nosso elbow. O ASW mostra que para o k = 3 se tem o melhor resultado, 0.34, apesar da estrutura de agrupamento ainda ser fraca. Portanto, o K-Means gera um resultado melhor que o AGNES, para o k = 3.
+Utilizando o K-means é possível observar pelo plot dos clusters que ele consegue separar melhor os grupos. Analisando os gráficos whithinss e betweenss fica claro que para o k = 3 existe uma quebra na suavidade da curva, sendo assim esse o nosso elbow. O ASW mostra que para o k = 3 se tem o melhor resultado. Portanto, o K-Means gera um resultado melhor que o AGNES, para o k = 3.
 
 ### Clusters
-![Clusters](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/K-means%20Cluster.png)
+![Clusters](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/img/K-means%20clusters.png)
 
-### Withinss|Betweenss           
+### Elbow Method         
 
-![Withinss|Betweenss](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/Elbow.png)
+![Elbow Method](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/img/K-means%20elbow.png)
 
 ### Silhouette Width
 
-![Silhouette Width](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/Silhouette.png)
+![Silhouette Width](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/img/K-means%20silhouette.png)
