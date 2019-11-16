@@ -16,36 +16,45 @@ a 5 (concordo totalmente) às seguintes afirmações:
 
 Os resultados estão na tabela em arquivo Excel localizado neste repositório.
 
-## Checando Correlações
+## PPré-processamento dos Dados
 
-![Correlações](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/Correlac%CC%A7a%CC%83o.png)
+### Checando Tipos de Dados
+
+![Summary](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/img/summary.PNG)
+
+![Classes](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/img/class.PNG)
+
+![Summary - Tratado](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/img/summarytratado.PNG)
+
+### Checando Correlações
+
+![Correlações](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/img/correlacao.PNG)
 
 Observando a imagem acima pode-se constatar que houve correlações consideráveis entre as variáveis:
 
-- Emocionar-Aceitar: 54
-- Gostar-Diversão: 59
-- Emocionar-Cansar: 67
-- Emocionar-Casamento: 69
-- Conhecer-Gostar: 55
+- Emocionar-Cansar: .67
+- Emocionar-Casamento: .69
 
-Quando uma quantidade relevante de variáveis é altamente correlacionada, a característica que elas representam está sendo mais considerada que as outras características, representadas por variáveis não correlacionadas. Isso é nocivo, pois uma característica estará sendo privilegiada em relação à outra. Porém, nesse caso, testamos retirando as colunas gostar_...3 e emocionar, e não houve uma melhora significativa, portanto decidiu-se manter todas as variáveis.
+Quando uma quantidade relevante de variáveis é altamente correlacionada, a característica que elas representam está sendo mais considerada que as outras características, representadas por variáveis não correlacionadas. Isso é nocivo, pois uma característica estará sendo privilegiada em relação à outra. Nesse caso, retirou-se a variável "emocionar", para que todas as correlações ficassem abaixo de .60.
+
+![Correlações - Tratadas](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/img/correlacaotratada.PNG)
 
 ## AGNES - Método WARD
 
-Seguindo o Elbow Method, podemos observar nos gráficos beetweens e whithinss abaixo que o cotovelo se encontra no k = 4. Já observando o dendograma, é possível fazer um corte nas pernas mais longas gerando também 4 clusters, corroborando o elbow method. O Silhouette Width aponta para um resultado ótimo em k = 2, porém com a medida de 0.37 (não atingiu a medida de confiabilidade adequada), optamos por manter o k = 4 como melhor resultado seguindo a análise do elbow e dendograma.
+Seguindo o Elbow Method, podemos observar nos gráficos beetweens e whithinss abaixo que o cotovelo se encontra no k = 3. Já observando o dendograma, é possível fazer um corte nas pernas mais longas gerando também 3 clusters, corroborando o elbow method. O Silhouette Width aponta para um resultado ótimo em k = 3.
 
 Clusters             |  Dendograma
 :-------------------------:|:-------------------------:
-![Clusters](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/Agnes%20Ward%20Cluster.png)  |  ![Dendograma](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/Agnes%20Ward%20Dendograma.png)
+![Clusters](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/img/Agnes%20ward%20clusters.png)  |  ![Dendograma](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/img/Agnes%20ward%20dendograma.png)
 
 
-### Withinss|Betweenss           
+### Elbow Method           
 
-![Withinss|Betweenss](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/Agnes%20Ward%20Elbow.png)
+![Elbow Method](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/img/Agnes%20ward%20elbow.png)
 
 ### Silhouette Width
 
-![Silhouette Width](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/Agnes%20Ward%20Silhouette.png)
+![Silhouette Width](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/img/Agnes%20ward%20silhouette.png)
 
 ## AGNES - Método AVERAGE
 
