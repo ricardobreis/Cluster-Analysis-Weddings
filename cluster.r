@@ -2,8 +2,6 @@
 #
 # MÉTODOS MATRICIAIS E ANÁLISE SE CLUSTER - MBA Business Analytics e Big Data
 # Por: RICARDO REIS
-#      MÁRCIO EGGERS
-#      FLÁVIO FREIRE
 #
 # CASE - BASE CASAMENTOS
 #
@@ -16,6 +14,7 @@ library(readxl)
 library(fpc)
 library(factoextra)
 library(cluster)
+library(purrr)
 
 
 # Análise da Base de Dados ------------------------------------------------
@@ -55,49 +54,53 @@ BASECASAMENTOS_drivers_num$gostar_...7 = as.numeric(BASECASAMENTOS_drivers_num$g
 BASECASAMENTOS_drivers_num$cansar_ = as.numeric(BASECASAMENTOS_drivers_num$cansar_)
 BASECASAMENTOS_drivers_num$casamento = as.numeric(BASECASAMENTOS_drivers_num$casamento)
 
-BASECASAMENTOS_drivers_num_z <- as.data.frame(lapply(BASECASAMENTOS_drivers_num, scale))
+# Neste momento não é necessário colocar os dados em escala pois eles já estão na mesma escala
+# BASECASAMENTOS_drivers_num_z <- as.data.frame(lapply(BASECASAMENTOS_drivers_num, scale))
 
 # Calculando a correlação entre as variáveis. Deve-se tomar o cuidado de que não hajam grandes correlações 
 # entre as variáveis, pois estareamos considerando a mesma informação repetidas vezes, 
 # aumentando o "peso" daquela informação na formação dos clusters.
-cor(BASECASAMENTOS_drivers_num_z)
-
-# Padronizar as variáveis e calcular a matriz de distancias por métrica de Gower.
-md = daisy(BASECASAMENTOS_drivers)
+cor(BASECASAMENTOS_drivers_num)
 
 # K-MEANS -----------------------------------------------------------------
 
-matrizrespostas <- data.frame()
-k<-2
+BASECASAMENTOS_drivers_num_dist <- dist(BASECASAMENTOS_drivers_num, method = "euclidean")
 
-####looping para armazenar respostas
-while(k<30){
-  KMeans_clustering_k3 <- kmeans(BASECASAMENTOS_drivers_num_z, k, nstart = 20)
-  KMeans_clustering_k3
-  KMeans_clustering_k3$cluster
-  KMeans_clustering_k3$centers
-  KMeans_clustering_k3$totss
-  KMeans_clustering_k3$withinss
-  KMeans_clustering_k3$tot.withinss
-  KMeans_clustering_k3$betweenss
-  KMeans_clustering_k3$size
-  BASECASAMENTOS_drivers_num_z_dist <- dist(BASECASAMENTOS_drivers_num_z, method = "euclidean")
-  BASECASAMENTOS_drivers_num_z_dist
-  cluster.stats(BASECASAMENTOS_drivers_num_z_dist, KMeans_clustering_k3$cluster)
-  cluster.stats(BASECASAMENTOS_drivers_num_z_dist, KMeans_clustering_k3$cluster)$avg.silwidth
-  matrizrespostasparcial<-data.frame(whithinss=KMeans_clustering_k3$tot.withinss,betweenss=KMeans_clustering_k3$betweenss,silhouette=cluster.stats(BASECASAMENTOS_drivers_num_z_dist, KMeans_clustering_k3$cluster)$avg.silwidth)
-  matrizrespostas<-rbind(matrizrespostas,matrizrespostasparcial)
-  k<-k+1
-}
+#### tot_withinss
+tot_withinss <- map_dbl(2:29,  function(k){
+  model <- kmeans(x = BASECASAMENTOS_drivers_num, centers = k, nstart = 20)
+  model$tot.withinss
+})
 
-#### plotando respostas
-plot(matrizrespostas$whithinss, type="l")
-plot(matrizrespostas$betweenss, type="l")
-plot(matrizrespostas$silhouette, type="l")
-matplot(cbind(matrizrespostas$whithinss, matrizrespostas$betweenss), type = 'l')
+# Gera o data frame contendo o k e tot_withinss
+elbow_df <- data.frame(
+  k = 2:29,
+  tot_withinss = tot_withinss
+)
+
+ggplot(elbow_df, aes(x = k, y = tot_withinss)) +
+  geom_line() +
+  scale_x_continuous(breaks = 2:29)
+
+#### Silhouette Width
+sil_width <- map_dbl(2:29,  function(k){
+  model <- kmeans(x = BASECASAMENTOS_drivers_num, centers = k, nstart = 20)
+  cluster.stats(BASECASAMENTOS_drivers_num_dist, model$cluster)$avg.silwidth
+})
+
+# Gera o data frame contendo o k e sil_width
+sil_df <- data.frame(
+  k = 2:29,
+  sil_width = sil_width
+)
+
+# Plot the relationship between k and sil_width
+ggplot(sil_df, aes(x = k, y = sil_width)) +
+  geom_line() +
+  scale_x_continuous(breaks = 2:29)
 
 #### analisando os gráficos de whithinss, betweenss e silhouette, o modelo que otmiza os resultados utiliza k=3
-KMeans_clustering_k3 <- kmeans(BASECASAMENTOS_drivers_num_z, 3, nstart = 20)
+KMeans_clustering_k3 <- kmeans(BASECASAMENTOS_drivers_num, 3, nstart = 20)
 KMeans_clustering_k3
 KMeans_clustering_k3$cluster
 KMeans_clustering_k3$centers
@@ -109,76 +112,109 @@ KMeans_clustering_k3$size
 KMeans_clustering_k3$iter
 KMeans_clustering_k3$ifault
 
-plotcluster(BASECASAMENTOS_drivers_num_z, KMeans_clustering_k3$cluster)
-
-fviz_cluster(list(data = BASECASAMENTOS_drivers_num_z, cluster = KMeans_clustering_k3$cluster),  show.clust.cent = T)
-BASECASAMENTOS_drivers_num_z_dist <- dist(BASECASAMENTOS_drivers_num_z, method = "euclidean")
-BASECASAMENTOS_drivers_num_z_dist
-cluster.stats(BASECASAMENTOS_drivers_num_z_dist, KMeans_clustering_k3$cluster)
-cluster.stats(BASECASAMENTOS_drivers_num_z_dist, KMeans_clustering_k3$cluster)$avg.silwidth
-
+#Plotando clusters
+plotcluster(BASECASAMENTOS_drivers_num, KMeans_clustering_k3$cluster)
+fviz_cluster(list(data = BASECASAMENTOS_drivers_num, cluster = KMeans_clustering_k3$cluster),  show.clust.cent = T)
 
 # AGNES -------------------------------------------------------------------
 
+# Padronizar as variáveis e calcular a matriz de distancias por métrica de Gower.
+# md = daisy(BASECASAMENTOS_drivers)
+
+BASECASAMENTOS_drivers_num_dist <- dist(BASECASAMENTOS_drivers_num, method = "euclidean")
+
 # Ward
 
-agnes_clustering_ward <- agnes(md, diss = TRUE, method = "ward")
-matrizrespostas <- data.frame()
-k <- 2
+agnes_clustering_ward <- agnes(BASECASAMENTOS_drivers_num_dist, diss = TRUE, method = "ward")
 
-####looping para armazenar respostas
-while(k<30){
+#### tot_withinss
+tot_withinss <- map_dbl(2:29,  function(k){
   agnes_clustering_ward_k <- cutree(agnes_clustering_ward, k = k)
-  
-  matrizrespostasparcial <- data.frame(whithinss=cluster.stats(BASECASAMENTOS_drivers_num_z_dist, agnes_clustering_ward_k)$n.within
-                                     ,betweenss=cluster.stats(BASECASAMENTOS_drivers_num_z_dist, agnes_clustering_ward_k)$n.between
-                                     ,silhouette=cluster.stats(BASECASAMENTOS_drivers_num_z_dist, agnes_clustering_ward_k)$avg.silwidth)
-  matrizrespostas <- rbind(matrizrespostas,matrizrespostasparcial)
-  k <- k+1
-}
+  cluster.stats(BASECASAMENTOS_drivers_num_dist, agnes_clustering_ward_k)$n.within
+})
 
-plot(matrizrespostas$whithinss, type="l")
-plot(matrizrespostas$betweenss, type="l")
-plot(matrizrespostas$silhouette, type="l")
+# Gera o data frame contendo o k e tot_withinss
+elbow_df <- data.frame(
+  k = 2:29,
+  tot_withinss = tot_withinss
+)
+
+ggplot(elbow_df, aes(x = k, y = tot_withinss)) +
+  geom_line() +
+  scale_x_continuous(breaks = 2:29)
+
+#### Silhouette Width
+sil_width <- map_dbl(2:29,  function(k){
+  agnes_clustering_ward_k <- cutree(agnes_clustering_ward, k = k)
+  cluster.stats(BASECASAMENTOS_drivers_num_dist, agnes_clustering_ward_k)$avg.silwidth
+})
+
+# Gera o data frame contendo o k e sil_width
+sil_df <- data.frame(
+  k = 2:29,
+  sil_width = sil_width
+)
+
+# Plot the relationship between k and sil_width
+ggplot(sil_df, aes(x = k, y = sil_width)) +
+  geom_line() +
+  scale_x_continuous(breaks = 2:29)
 
 # Para o k = 3
 
 agnes_clustering_ward_k3 <- cutree(agnes_clustering_ward, k = 3)
 agnes_clustering_ward_k3
 fviz_dend(agnes_clustering_ward, k=3)
-fviz_cluster(list(data = BASECASAMENTOS_drivers_num_z, cluster = agnes_clustering_ward_k3),  show.clust.cent = F)
+fviz_cluster(list(data = BASECASAMENTOS_drivers_num, cluster = agnes_clustering_ward_k3),  show.clust.cent = F)
+
 # Utilizar a função cluster.stats da library fpc para uma lista maior de métricas da solução de clusters encontrada.
-cluster.stats(BASECASAMENTOS_drivers_num_z_dist, agnes_clustering_ward_k3)
+cluster.stats(BASECASAMENTOS_drivers_num_dist, agnes_clustering_ward_k3)
 
 
 # Average
 
-agnes_clustering_average <- agnes(md, diss = TRUE, method = "average")
+agnes_clustering_average <- agnes(BASECASAMENTOS_drivers_num_dist, diss = TRUE, method = "average")
 
-matrizrespostas <- data.frame()
-k <- 2
-
-####looping para armazenar respostas
-while(k<30){
+#### tot_withinss
+tot_withinss <- map_dbl(2:29,  function(k){
   agnes_clustering_average_k <- cutree(agnes_clustering_average, k = k)
-  
-  matrizrespostasparcial <- data.frame(whithinss=cluster.stats(BASECASAMENTOS_drivers_num_z_dist, agnes_clustering_average_k)$n.within
-                                       ,betweenss=cluster.stats(BASECASAMENTOS_drivers_num_z_dist, agnes_clustering_average_k)$n.between
-                                       ,silhouette=cluster.stats(BASECASAMENTOS_drivers_num_z_dist, agnes_clustering_average_k)$avg.silwidth)
-  matrizrespostas <- rbind(matrizrespostas,matrizrespostasparcial)
-  k <- k + 1
-}
+  cluster.stats(BASECASAMENTOS_drivers_num_dist, agnes_clustering_average_k)$n.within
+})
 
-plot(matrizrespostas$whithinss, type="l")
-plot(matrizrespostas$betweenss, type="l")
-plot(matrizrespostas$silhouette, type="l")
+# Gera o data frame contendo o k e tot_withinss
+elbow_df <- data.frame(
+  k = 2:29,
+  tot_withinss = tot_withinss
+)
 
-# Para o k = 4
+ggplot(elbow_df, aes(x = k, y = tot_withinss)) +
+  geom_line() +
+  scale_x_continuous(breaks = 2:29)
 
-agnes_clustering_average_k4 <- cutree(agnes_clustering_average, k = 3)
-agnes_clustering_average_k4
+#### Silhouette Width
+sil_width <- map_dbl(2:29,  function(k){
+  agnes_clustering_average_k <- cutree(agnes_clustering_average, k = k)
+  cluster.stats(BASECASAMENTOS_drivers_num_dist, agnes_clustering_average_k)$avg.silwidth
+})
+
+# Gera o data frame contendo o k e sil_width
+sil_df <- data.frame(
+  k = 2:29,
+  sil_width = sil_width
+)
+
+# Plot the relationship between k and sil_width
+ggplot(sil_df, aes(x = k, y = sil_width)) +
+  geom_line() +
+  scale_x_continuous(breaks = 2:29)
+
+# Para o k = 3
+
+agnes_clustering_average_k3 <- cutree(agnes_clustering_average, k = 3)
+agnes_clustering_average_k3
 fviz_dend(agnes_clustering_average, k=3)
-fviz_cluster(list(data = BASECASAMENTOS_drivers_num_z, cluster = agnes_clustering_average_k4),  show.clust.cent = F)
+fviz_cluster(list(data = BASECASAMENTOS_drivers_num, cluster = agnes_clustering_average_k3),  show.clust.cent = F)
+
 # Utilizar a função cluster.stats da library fpc para uma lista maior de métricas da solução de clusters encontrada.
-cluster.stats(BASECASAMENTOS_drivers_num_z_dist, agnes_clustering_average_k4)
+cluster.stats(BASECASAMENTOS_drivers_num_dist, agnes_clustering_average_k3)
 
