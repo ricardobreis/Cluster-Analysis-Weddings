@@ -2,6 +2,8 @@
 #
 # MÉTODOS MATRICIAIS E ANÁLISE SE CLUSTER - MBA Business Analytics e Big Data
 # Por: RICARDO REIS
+#      MÁRCIO EGGERS
+#      FLÁVIO FREIRE
 #
 # CASE - BASE CASAMENTOS
 #
@@ -62,13 +64,18 @@ BASECASAMENTOS_drivers_num$casamento = as.numeric(BASECASAMENTOS_drivers_num$cas
 # aumentando o "peso" daquela informação na formação dos clusters.
 cor(BASECASAMENTOS_drivers_num)
 
+# Retirou-se a coluna emocionar
+BASECASAMENTOS_drivers_num = BASECASAMENTOS_drivers_num[ , -c(3)]
+
+cor(BASECASAMENTOS_drivers_num)
+
 # K-MEANS -----------------------------------------------------------------
 
 BASECASAMENTOS_drivers_num_dist <- dist(BASECASAMENTOS_drivers_num, method = "euclidean")
 
 #### tot_withinss
 tot_withinss <- map_dbl(2:29,  function(k){
-  model <- kmeans(x = BASECASAMENTOS_drivers_num, centers = k, nstart = 20)
+  model <- kmeans(x = BASECASAMENTOS_drivers_num, centers = k)
   model$tot.withinss
 })
 
@@ -84,7 +91,7 @@ ggplot(elbow_df, aes(x = k, y = tot_withinss)) +
 
 #### Silhouette Width
 sil_width <- map_dbl(2:29,  function(k){
-  model <- kmeans(x = BASECASAMENTOS_drivers_num, centers = k, nstart = 20)
+  model <- kmeans(x = BASECASAMENTOS_drivers_num, centers = k)
   cluster.stats(BASECASAMENTOS_drivers_num_dist, model$cluster)$avg.silwidth
 })
 
@@ -100,7 +107,7 @@ ggplot(sil_df, aes(x = k, y = sil_width)) +
   scale_x_continuous(breaks = 2:29)
 
 #### analisando os gráficos de whithinss, betweenss e silhouette, o modelo que otmiza os resultados utiliza k=3
-KMeans_clustering_k3 <- kmeans(BASECASAMENTOS_drivers_num, 3, nstart = 20)
+KMeans_clustering_k3 <- kmeans(BASECASAMENTOS_drivers_num, 3)
 KMeans_clustering_k3
 KMeans_clustering_k3$cluster
 KMeans_clustering_k3$centers
