@@ -18,9 +18,13 @@ Os resultados estão na tabela em arquivo Excel localizado neste repositório.
 
 ### Checando Tipos de Dados
 
+Podemos reparar que as features estão sendo erroneamente tratadas como numeric/character, quando na verdade são factors.
+
 ![Summary](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/img/summary.PNG)
 
 ![Classes](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/img/class.PNG)
+
+Ao se fazer o type casting das features para factor, podemos analisar, agora corretamente, como estão distribuidas na imagem abaixo:
 
 ![Summary - Tratado](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/img/summarytratado.PNG)
 
@@ -36,6 +40,8 @@ Observando a imagem acima pode-se constatar que houve correlações consideráve
 Quando uma quantidade relevante de variáveis é altamente correlacionada, a característica que elas representam está sendo mais considerada que as outras características, representadas por variáveis não correlacionadas. Isso é nocivo, pois uma característica estará sendo privilegiada em relação à outra. Nesse caso, retirou-se a variável "emocionar", para que todas as correlações ficassem abaixo de .60.
 
 ![Correlações - Tratadas](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/img/correlacaotratada.PNG)
+
+Obs: Para estas features não foi necessário colocar os dados em escala pois eles já se encontram na mesma.
 
 ## AGNES - Método WARD
 
