@@ -1,7 +1,5 @@
 # Cluster-Analysis-Weddings
 
-## Breve Explicação
-
 Trinta entrevistas foram feitas, pedindo-se para dar uma nota de 1 (discordo totalmente)
 a 5 (concordo totalmente) às seguintes afirmações:
 
@@ -52,9 +50,9 @@ Clusters             |  Dendograma
 
 ![Elbow Method](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/img/Agnes%20ward%20elbow.png)
 
-### Silhouette Width
+### Silhouette Analysis
 
-![Silhouette Width](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/img/Agnes%20ward%20silhouette.png)
+![Silhouette Analysis](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/img/Agnes%20ward%20silhouette.png)
 
 ## AGNES - Método AVERAGE
 
@@ -69,9 +67,9 @@ Clusters             |  Dendograma
 
 ![Elbow Method](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/img/Agnes%20average%20elbow.png)
 
-### Silhouette Width
+### Silhouette Analysis
 
-![Silhouette Width](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/img/Agnes%20average%20silhouette.png)
+![Silhouette Analysis](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/img/Agnes%20average%20silhouette.png)
 
 ## K-Means
 
@@ -84,6 +82,6 @@ Utilizando o K-means é possível observar pelo plot dos clusters que ele conseg
 
 ![Elbow Method](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/img/K-means%20elbow.png)
 
-### Silhouette Width
+### Silhouette Analysis
 
-![Silhouette Width](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/img/K-means%20silhouette.png)
+![Silhouette Analysis](https://github.com/ricardobreis/Cluster-Analysis-Weddings/blob/master/img/K-means%20silhouette.png)
